@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificate of Completion</title>
+  <style>
+    @page { 
+      size: A4 landscape; 
+      margin: 0;
+    }
+    
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      margin: 0;
+      padding: 0;
+      width: 297mm;
+      height: 210mm;
+      overflow: hidden;
+    }
+    
+    .certificate-container {
+      width: 297mm;
+      height: 210mm;
+      background: white;
+      position: relative;
+      display: flex;
+    }
+    
+    /* Main content area */
+    .content {
+      flex: 1;
+      padding: 60px 80px 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    
+    /* Green stripe on right */
+    .stripe {
+      width: 130px;
+      background: linear-gradient(to bottom, #14532d 0%, #0f3b24 100%);
+      position: relative;
+    }
+    
+    /* Star badge */
+    .star-badge {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 120px;
+    }
+    
+    .star {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    .star svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .logo-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: #14532d;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+    }
+    
+    /* Decorative corners */
+    .corner {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+    }
+    
+    .corner-tl {
+      top: 30px;
+      left: 30px;
+      border-left: 4px solid rgba(20, 83, 45, 0.3);
+      border-top: 4px solid rgba(20, 83, 45, 0.3);
+    }
+    
+    .corner-bl {
+      bottom: 30px;
+      left: 30px;
+      border-left: 4px solid rgba(20, 83, 45, 0.3);
+      border-bottom: 4px solid rgba(20, 83, 45, 0.3);
+    }
+    
+    /* Typography */
+    .title {
+      font-size: 52px;
+      color: #14532d;
+      font-weight: normal;
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+    }
+    
+    .subtitle {
+      font-size: 20px;
+      color: #4b5563;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+    
+    .name {
+      font-size: 70px;
+      font-family: 'Brush Script MT', cursive;
+      font-style: italic;
+      color: #14532d;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+    
+    .name-divider {
+      height: 2px;
+      background: #d1d5db;
+      margin-bottom: 40px;
+    }
+    
+    .course-text {
+      font-size: 19px;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 60px;
+    }
+    
+    .course-name {
+      font-weight: bold;
+      color: #14532d;
+    }
+    
+    /* Signatures */
+    .signatures {
+      display: flex;
+      gap: 60px;
+    }
+    
+    .signature {
+      flex: 1;
+    }
+    
+    .sig-name {
+      font-size: 42px;
+      font-family: 'Brush Script MT', cursive;
+      font-style: italic;
+      color: #14532d;
+      margin-bottom: 4px;
+      font-weight: normal;
+    }
+    
+    .sig-divider {
+      height: 2px;
+      background: #d1d5db;
+      width: 200px;
+      margin-bottom: 12px;
+    }
+    
+    .sig-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f2937;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    
+    .sig-org {
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+    
+
+  </style>
+</head>
+<body>
+  <div class="certificate-container" id="certificate">
+    <!-- Decorative corners -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-bl"></div>
+    
+    <!-- Main content -->
+    <div class="content">
+      <div>
+        <h1 class="title">CERTIFICATE OF COMPLETION</h1>
+        <p class="subtitle">THIS IS TO CERTIFY THAT</p>
+        
+        <div class="name" id="studentName">{{name}}</div>
+        <div class="name-divider"></div>
+        
+        <p class="course-text">
+          has successfully completed <span class="course-name" id="courseName">Sensing the Unsensed: Digital Twins and AI in Shaping Our Future</span> course on the <span id="completionDate">8th November, 2025</span>.
+        </p>
+      </div>
+      
+      <div class="signatures">
+        <div class="signature">
+          <div class="sig-name" id="sig1Name">Syed</div>
+          <div class="sig-divider"></div>
+          <p class="sig-title" id="sig1Title">Dr. Syed Bahauddin Alam</p>
+          <p class="sig-org" id="sig1Org">Assistant Professor,<br>Nuclear, Plasma, and Radiological Engineering<br>University of Illinois Urbana-Champaign</p>
+        </div>
+        
+        <div class="signature">
+          <div class="sig-name" id="sig2Name">Rauful</div>
+          <div class="sig-divider"></div>
+          <p class="sig-title" id="sig2Title">Dr. Rauful Alam</p>
+          <p class="sig-org" id="sig2Org">Co-founder, ResearchOrbit<br>Staff Scientist,<br>Center fo Chemical Biology and Therapeutics,<br>University of Chicago, USA</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Green stripe with star badge -->
+    <div class="stripe">
+      <div class="star-badge">
+        <div class="star">
+          <svg viewBox="0 0 100 100">
+            <polygon 
+              points="50,5 61,35 92,35 67,55 78,85 50,65 22,85 33,55 8,35 39,35" 
+              fill="#1e5a3a"
+              stroke="#d4af37"
+              stroke-width="2"
+            />
+          </svg>
+        </div>
+        <div class="logo-circle">RIVET</div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Certificate data - change these values dynamically
+    const certificateData = {
+      studentName: "Samia Malik",
+      courseName: "Sensing the Unsensed: Digital Twins and AI in Shaping Our Future",
+      completionDate: "8th November, 2025",
+      signature1: {
+        name: "Syed",
+        title: "Dr. Syed Bahauddin Alam",
+        org: "Assistant Professor,<br>Nuclear, Plasma, and Radiological Engineering<br>University of Illinois Urbana-Champaign"
+      },
+      signature2: {
+        name: "Rauful",
+        title: "Dr. Rauful Alam",
+        org: "Co-founder, ResearchOrbit<br>Staff Scientist,<br>Center fo Chemical Biology and Therapeutics,<br>University of Chicago, USA"
+      }
+    };
+    
+    // Update certificate with data
+    function updateCertificate(data) {
+      document.getElementById('studentName').textContent = data.studentName;
+      document.getElementById('courseName').textContent = data.courseName;
+      document.getElementById('completionDate').textContent = data.completionDate;
+      document.getElementById('sig1Name').textContent = data.signature1.name;
+      document.getElementById('sig1Title').textContent = data.signature1.title;
+      document.getElementById('sig1Org').innerHTML = data.signature1.org;
+      document.getElementById('sig2Name').textContent = data.signature2.name;
+      document.getElementById('sig2Title').textContent = data.signature2.title;
+      document.getElementById('sig2Org').innerHTML = data.signature2.org;
+    }
+    
+    // Initialize with data
+    updateCertificate(certificateData);
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Speaker {
+  id          Int       @id @default(autoincrement())
+  name        String
+  designation String
+  image       String
+  website     String?   @default("") @unique
+  description String?
+
+  sessions    Session[]
+}
+
+model Session {
+  id              Int       @id @default(autoincrement())
+  name            String
+  category        String
+  description     String
+  image           String
+  tagline        String?
+
+  // Relation to Speaker
+  speakerId       Int?
+  speaker         Speaker?  @relation(fields: [speakerId], references: [id], onDelete: SetNull)
+
+  // Time fields (from ... to)
+  startTime       DateTime
+  endTime         DateTime
+
+  registrationFee Int       @default(0)
+  seats           Int
+
+  platform        String
+  meetingLink     String?
+
+  isOpen          Boolean   @default(true)
+
+  slug            String    @unique
+  tags            String[]  @default([])
+
+  createdBy       Int?
+  updatedBy       Int?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  registrations Registration[]
+
+}
+
+
+model User {
+  id        Int             @id @default(autoincrement())
+  name      String?
+  email     String          @unique
+  password  String?
+  isAdmin   Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  registrations Registration[]
+}
+
+model Registration {
+  id             Int       @id @default(autoincrement())
+
+  // relations
+  userId         Int
+  sessionId      Int
+
+  user           User      @relation(fields: [userId], references: [id])
+  session        Session   @relation(fields: [sessionId], references: [id])
+
+  // payment fields
+  paymentStatus  String    @default("pending")  // pending | paid | failed
+  transactionId  String?                        // returned by gateway
+  // store amount as Decimal (precision 10,2) to support fractional currency values
+  amount         Decimal  @db.Decimal(10, 2)
+  paymentMethod  String?                         // bkash | card | nagad
+  paidAt         DateTime?                       // timestamp of successful payment
+
+
+  isEmailSent    Boolean   @default(false)
+
+  createdAt      DateTime  @default(now())
+}
+
+
+model EmailVerification {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  code      String
+  expireAt  DateTime
+  sessionId Int?
+  createdAt DateTime @default(now())
+}
+
+model AdminVerification {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  code      String
+  expireAt  DateTime
+  createdAt DateTime @default(now())
+}
+
+
